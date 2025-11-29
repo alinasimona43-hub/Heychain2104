@@ -1,4 +1,4 @@
-// Solo tu juego de Scratch
+// Tu juego de Scratch
 const juegos = [
     "https://scratch.mit.edu/projects/1190684640/embed"
 ];
@@ -16,12 +16,6 @@ juegos.forEach(url => {
     iframe.frameBorder = "0";
     iframe.scrolling = "no";
     iframe.allowFullscreen = true;
-
-    // Estilo del iframe
-    iframe.style.display = "block";
-    iframe.style.margin = "20px auto";
-    iframe.style.border = "2px solid #4CAF50";
-    iframe.style.borderRadius = "10px";
 
     contenedor.appendChild(iframe);
 });
