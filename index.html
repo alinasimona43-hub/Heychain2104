@@ -13,7 +13,6 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
-    /* NO usar display:flex ni justify-content:center */
 }
 
 #logo {
@@ -29,13 +28,14 @@ body {
     font-size: 2em;
 }
 
-/* Contenedor de botones/miniaturas */
+/* Contenedor de juegos usando CSS Grid para filas de 6 columnas */
 .juegos {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 columnas por fila */
     gap: 20px;
+    justify-items: center;
     margin-top: 20px;
+    padding: 0 10px;
 }
 
 .juegos img.miniatura {
@@ -56,6 +56,23 @@ canvas#fondo {
     top: 0;
     left: 0;
     z-index: -1;
+}
+
+/* Responsive: ajustar columnas según pantalla */
+@media (max-width: 1200px) {
+    .juegos {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media (max-width: 800px) {
+    .juegos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 500px) {
+    .juegos {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
@@ -78,15 +95,15 @@ canvas#fondo {
         <img src="thumb-pixelinvaders.png" alt="Pixel Invaders" class="miniatura">
     </a>
     <a href="juegos/Dungeon-blox/index.html">
-        <img src="thumb3.png" alt="Pixel Invaders" class="miniatura">
+        <img src="thumb3.png" alt="Dungeon Blox" class="miniatura">
     </a>
     <a href="juegos/JustAnotherHorrorGame/index.html">
         <img src="thumb4.png" alt="JustAnotherHorrorGame" class="miniatura">
     </a>
-     <!-- Construct Juego -->
     <a href="bear-game.html">
         <img src="bear.png" alt="Construct Juego" class="miniatura">
     </a>
+    <!-- Agrega más miniaturas aquí; se organizarán automáticamente en filas de 6 -->
 </div>
 
 <script>
