@@ -1,32 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página de Juegos</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Página de Juegos</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body {
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    /* NO usar display:flex ni justify-content:center */
+}
+
+#logo {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 120px;
+    z-index: 10;
+}
+
+#titulo {
+    margin-top: 20px;
+    font-size: 2em;
+}
+
+/* Contenedor de botones/miniaturas */
+.juegos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.juegos img.miniatura {
+    width: 200px;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.juegos img.miniatura:hover {
+    transform: scale(1.1);
+}
+
+canvas#fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+</style>
 </head>
 <body>
 
-<!-- Fondo animado -->
 <canvas id="fondo"></canvas>
 
-<!-- Logo grande -->
 <img src="logo.png" alt="Logo" id="logo">
 
-<!-- Título RGB -->
 <h1 id="titulo">Bienvenido a mi página de juegos</h1>
 
-<!-- Sección de juegos -->
 <div class="juegos">
-    <!-- Juego Scratch -->
     <a href="scratch-juego1.html">
-        <img src="thumb-scratch2.png" alt="Scratch 1" class="miniatura">
-    <a href="juego2.html">
-        <img src="thumb-scratch1.png" alt="Scratch 2" class="miniatura">
+        <img src="thumb-scratch1.png" alt="Scratch 1" class="miniatura">
     </a>
-
-    <!-- Juego Unity WebGL -->
+    <a href="juego2.html">
+        <img src="thumb-scratch2.png" alt="Scratch 2" class="miniatura">
+    </a>
     <a href="juegos/pixel-invaders-master/index.html">
         <img src="thumb-pixelinvaders.png" alt="Pixel Invaders" class="miniatura">
     </a>
@@ -48,7 +95,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const particulas = [];
-for(let i=0; i<100; i++){
+for(let i=0;i<100;i++){
     particulas.push({
         x: Math.random()*canvas.width,
         y: Math.random()*canvas.height,
@@ -58,27 +105,26 @@ for(let i=0; i<100; i++){
     });
 }
 
-function animar() {
-    ctx.fillStyle = "rgba(0,0,0,0.2)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    particulas.forEach(p => {
+function animar(){
+    ctx.fillStyle="rgba(0,0,0,0.2)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    particulas.forEach(p=>{
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        ctx.fillStyle = "white";
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle="white";
         ctx.fill();
         p.x += p.dx;
         p.y += p.dy;
-        if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
+        if(p.x<0 || p.x>canvas.width)p.dx*=-1;
+        if(p.y<0 || p.y>canvas.height)p.dy*=-1;
     });
     requestAnimationFrame(animar);
 }
 animar();
 
-// Ajuste de canvas al cambiar tamaño de ventana
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+window.addEventListener('resize',()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
 });
 </script>
 
