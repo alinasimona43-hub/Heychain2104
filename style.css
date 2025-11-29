@@ -24,19 +24,21 @@ h1 {
     100% { background-position: 0% 50%; }
 }
 
-/* Logo en la esquina */
+/* Logo grande en la esquina, siempre visible */
 #logo {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    width: 60px;
+    position: fixed;   /* se mantiene en la esquina */
+    top: 10px;         
+    left: 10px;        
+    width: 120px;      /* grande tanto en móvil como en PC */
     height: auto;
     z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-@media (min-width: 768px) {
+/* Logo aún más grande en pantallas grandes */
+@media (min-width: 1024px) {
     #logo {
-        width: 80px;
+        width: 150px;
     }
 }
 
@@ -46,9 +48,9 @@ iframe {
     margin: 20px auto;
     border: 2px solid #4CAF50;
     border-radius: 10px;
-    width: 90%;       /* se ajusta al ancho de pantalla */
+    width: 90%;       /* ancho adaptable */
     max-width: 485px; /* ancho máximo */
-    height: 270px;    /* altura proporcional al ancho del iframe */
+    height: 270px;    /* altura proporcional */
 }
 
 /* Ajuste del título en móviles */
@@ -57,3 +59,4 @@ iframe {
         font-size: 1.4rem;
     }
 }
+
