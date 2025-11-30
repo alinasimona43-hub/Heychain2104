@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOOTBALL RANDOM</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+#logo {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 120px;
+    z-index: 10;
+}
+
+#titulo {
+    margin-top: 20px;
+    font-size: 2em;
+}
+
+canvas#fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.juego-container {
+    display: flex;
+    justify-content: center;
+    margin: 50px auto;
+    width: 100%;
+}
+
+.mas-juegos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.mas-juegos img.miniatura-pequena {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 5px;
+    transition: transform 0.2s;
+}
+
+.mas-juegos img.miniatura-pequena:hover {
+    transform: scale(1.1);
+}
+</style>
+</head>
+<body>
+
+<canvas id="fondo"></canvas>
+
+<img src="logo.png" alt="Logo" id="logo">
+
+<h1 id="titulo">FOOTBALL RANDOM</h1>
+
+<div class="juego-container">
+    <!-- REEMPLAZA ESTE IFRAME CON EL DEL JUEGO -->
+    <iframe src="https://crazygames-poki.com/embed/soccer-random" width="100%" height="600" scrolling="no" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<h2>Más juegos</h2>
+<div class="mas-juegos">
+    <!-- REEMPLAZA LOS ENLACES/MINIATURAS CON LOS JUEGOS QUE QUIERAS -->
+    <a href="basketball.html">
+        <img src="basketball.png" class="miniatura-pequena" alt="Juego 1">
+    </a>
+    <a href="Cars.html">
+        <img src="Cars.png" class="miniatura-pequena" alt="Juego 2">
+    </a>
+    <a href="fire.html">
+        <img src="fire.png" class="miniatura-pequena" alt="Juego 3">
+    </a>
+    <a href="bear-game.html">
+        <img src="bear.png" class="miniatura-pequena" alt="Juego 4">
+    </a>
+</div>
+
+<script>
+// Título RGB animado
+const titulo = document.getElementById("titulo");
+let hue = 0;
+setInterval(() => {
+    titulo.style.color = `hsl(${hue}, 100%, 50%)`;
+    hue = (hue + 1) % 360;
+}, 50);
+
+// Fondo partículas
+const canvas = document.getElementById("fondo");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particulas = [];
+for(let i=0;i<100;i++){
+    particulas.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*3 + 1,
+        dx: Math.random()*2 - 1,
+        dy: Math.random()*2 - 1
+    });
+}
+
+function animar(){
+    ctx.fillStyle="rgba(0,0,0,0.2)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    particulas.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle="white";
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if(p.x<0 || p.x>canvas.width)p.dx*=-1;
+        if(p.y<0 || p.y>canvas.height)p.dy*=-1;
+    });
+    requestAnimationFrame(animar);
+}
+animar();
+
+window.addEventListener('resize',()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+</script>
+
+</body>
+</html>
