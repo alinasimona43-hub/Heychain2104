@@ -42,21 +42,33 @@ canvas#fondo { position:fixed; top:0; left:0; z-index:-1; }
 <img src="logo.png" alt="Logo" id="logo">
 <h1 id="titulo">Bienvenido a mi página de juegos</h1>
 
-<div class="juegos" id="juegos-container">
-    <!-- Juegos iniciales -->
-    <a href="scratch-juego1.html"><img src="thumb-scratch1.png" alt="Scratch 1" class="miniatura"></a>
-    <a href="scratch-juego2.html"><img src="thumb-scratch2.png" alt="Scratch 2" class="miniatura"></a>
-    <a href="juegos/pixel-invaders-master/index.html"><img src="thumb-pixelinvaders.png" alt="Pixel Invaders" class="miniatura"></a>
-    <a href="juegos/Dungeon-blox/index.html"><img src="thumb3.png" alt="Dungeon Blox" class="miniatura"></a>
-    <a href="juegos/JustAnotherHorrorGame/index.html"><img src="thumb4.png" alt="JustAnotherHorrorGame" class="miniatura"></a>
-    <a href="bear-game.html"><img src="bear.png" alt="Construct Juego" class="miniatura"></a>
+<div class="juegos">
+    <a href="scratch-juego1.html"><img src="thumb-scratch1.png" class="miniatura" alt="Scratch 1"></a>
+    <a href="scratch-juego2.html"><img src="thumb-scratch2.png" class="miniatura" alt="Scratch 2"></a>
+    <a href="juegos/pixel-invaders-master/index.html"><img src="thumb-pixelinvaders.png" class="miniatura" alt="Pixel Invaders"></a>
+    <a href="juegos/Dungeon-blox/index.html"><img src="thumb3.png" class="miniatura" alt="Dungeon Blox"></a>
+    <a href="juegos/JustAnotherHorrorGame/index.html"><img src="thumb4.png" class="miniatura" alt="JustAnotherHorrorGame"></a>
+    <a href="bear-game.html"><img src="bear.png" class="miniatura" alt="Bear Game"></a>
+    <a href="football.html"><img src="football.png" class="miniatura" alt="Football"></a>
+    <a href="spider.html"><img src="spider.png" class="miniatura" alt="Spider"></a>
+    <a href="majhong.html"><img src="majhong.png" class="miniatura" alt="Majhong"></a>
+    <a href="slenderman.html"><img src="slenderman.png" class="miniatura" alt="Slenderman"></a>
+    <a href="offroader.html"><img src="offroader.png" class="miniatura" alt="Offroader"></a>
+    <a href="getaway-shootout.html"><img src="getaway-shootout.png" class="miniatura" alt="Getaway Shootout"></a>
+    <a href="Basketball.html"><img src="basketball.png" class="miniatura" alt="Basketball"></a>
+    <a href="Red-Ball-4.html"><img src="Red-Ball-4.png" class="miniatura" alt="Red Ball 4"></a>
+    <a href="slope-ball.html"><img src="slope-ball.png" class="miniatura" alt="Slope Ball"></a>
+    <!-- Agrega más juegos aquí -->
 </div>
 
 <script>
 // Título RGB animado
 const titulo = document.getElementById("titulo");
 let hue=0;
-setInterval(()=>{titulo.style.color=`hsl(${hue},100%,50%)`; hue=(hue+1)%360;},50);
+setInterval(()=>{
+    titulo.style.color=`hsl(${hue},100%,50%)`;
+    hue=(hue+1)%360;
+},50);
 
 // Fondo partículas
 const canvas=document.getElementById("fondo");
@@ -88,50 +100,6 @@ function animar(){
 }
 animar();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
-
-// ---------- Carga dinámica de juegos ----------
-const juegosContainer = document.getElementById("juegos-container");
-
-// Lista de juegos adicionales (puedes agregar más)
-const juegosExtra = [
-    {href:"football.html", img:"football.png", alt:"Football"},
-    {href:"spider.html", img:"spider.png", alt:"Spider"},
-    {href:"majhong.html", img:"majhong.png", alt:"Majhong"},
-    {href:"slenderman.html", img:"slenderman.png", alt:"Slenderman"},
-    {href:"offroader.html", img:"offroader.png", alt:"Offroader"},
-    {href:"getaway-shootout.html", img:"getaway-shootout.png", alt:"Getaway Shootout"},
-    {href:"Basketball.html", img:"basketball.png", alt:"Basketball"},
-    {href:"Red-Ball-4.html", img:"Red-Ball-4.png", alt:"Red Ball 4"},
-    {href:"slope-ball.html", img:"slope-ball.png", alt:"Slope Ball"}
-];
-
-let indexExtra = 0;
-let cargando = false;
-
-function cargarMasJuegos(){
-    if(cargando || indexExtra>=juegosExtra.length) return;
-    cargando = true;
-    const cargaPorVez = 3; // cuántos juegos se cargan cada vez
-    for(let i=0;i<cargaPorVez && indexExtra<juegosExtra.length;i++, indexExtra++){
-        const juego = juegosExtra[indexExtra];
-        const a = document.createElement("a");
-        a.href = juego.href;
-        const img = document.createElement("img");
-        img.src = juego.img;
-        img.alt = juego.alt;
-        img.className = "miniatura";
-        a.appendChild(img);
-        juegosContainer.appendChild(a);
-    }
-    cargando = false;
-}
-
-// Detectar cuando el usuario llega al fondo
-window.addEventListener("scroll", ()=>{
-    if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 200){
-        cargarMasJuegos();
-    }
-});
 </script>
 
 </body>
