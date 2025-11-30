@@ -9,11 +9,27 @@
 body { background:black; color:white; font-family:Arial, sans-serif; margin:0; padding:0; text-align:center; }
 #logo { position: fixed; top:10px; left:10px; width:120px; z-index:10; }
 #titulo { margin-top:20px; font-size:2em; }
+
 /* Contenedor juegos con Grid 6 columnas */
-.juegos { display:grid; grid-template-columns:repeat(6,1fr); gap:20px; justify-items:center; margin-top:20px; padding:0 10px; }
-.juegos img.miniatura { width:200px; height:auto; cursor:pointer; border:2px solid white; border-radius:10px; transition:transform 0.2s; }
+.juegos {
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:20px;
+    justify-items:center;
+    margin-top:20px;
+    padding:0 10px;
+}
+.juegos img.miniatura {
+    width:200px;
+    height:auto;
+    cursor:pointer;
+    border:2px solid white;
+    border-radius:10px;
+    transition:transform 0.2s;
+}
 .juegos img.miniatura:hover { transform:scale(1.1); }
 canvas#fondo { position:fixed; top:0; left:0; z-index:-1; }
+
 /* Responsive */
 @media(max-width:1200px){.juegos{grid-template-columns:repeat(4,1fr);}}
 @media(max-width:800px){.juegos{grid-template-columns:repeat(2,1fr);}}
@@ -26,23 +42,14 @@ canvas#fondo { position:fixed; top:0; left:0; z-index:-1; }
 <img src="logo.png" alt="Logo" id="logo">
 <h1 id="titulo">Bienvenido a mi página de juegos</h1>
 
-<div class="juegos">
+<div class="juegos" id="juegos-container">
+    <!-- Juegos iniciales -->
     <a href="scratch-juego1.html"><img src="thumb-scratch1.png" alt="Scratch 1" class="miniatura"></a>
     <a href="scratch-juego2.html"><img src="thumb-scratch2.png" alt="Scratch 2" class="miniatura"></a>
     <a href="juegos/pixel-invaders-master/index.html"><img src="thumb-pixelinvaders.png" alt="Pixel Invaders" class="miniatura"></a>
     <a href="juegos/Dungeon-blox/index.html"><img src="thumb3.png" alt="Dungeon Blox" class="miniatura"></a>
     <a href="juegos/JustAnotherHorrorGame/index.html"><img src="thumb4.png" alt="JustAnotherHorrorGame" class="miniatura"></a>
     <a href="bear-game.html"><img src="bear.png" alt="Construct Juego" class="miniatura"></a>
-    <a href="football.html"><img src="football.png" alt="football" class="miniatura"></a>
-    <a href="spider.html"><img src="spider.png" alt="spider" class="miniatura"></a>
-    <a href="majhong.html"><img src="majhong.png" alt="spider" class="miniatura"></a>
-    <a href="slenderman.html"><img src="slenderman.png" alt="spider" class="miniatura"></a>
-    <a href="offroader.html"><img src="offroader.png" alt="spider" class="miniatura"></a>
-    <a href="getaway-shootout.html"><img src="getaway-shootout.png" alt="spider" class="miniatura"></a>
-    <a href="Basketball.html"><img src="basketball.png" alt="spider" class="miniatura"></a>
-    <a href="Red-Ball-4.html"><img src="Red-Ball-4.png" alt="spider" class="miniatura"></a>
-    <a href="slope-ball.html"><img src="slope-ball.png" alt="spider" class="miniatura"></a>
-    <!-- Agrega más juegos aquí -->
 </div>
 
 <script>
@@ -56,10 +63,75 @@ const canvas=document.getElementById("fondo");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth; canvas.height=window.innerHeight;
 const particulas=[];
-for(let i=0;i<100;i++){particulas.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, dx:Math.random()*2-1, dy:Math.random()*2-1});}
-function animar(){ctx.fillStyle="rgba(0,0,0,0.2)"; ctx.fillRect(0,0,canvas.width,canvas.height); particulas.forEach(p=>{ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle="white"; ctx.fill(); p.x+=p.dx; p.y+=p.dy; if(p.x<0||p.x>canvas.width)p.dx*=-1; if(p.y<0||p.y>canvas.height)p.dy*=-1;}); requestAnimationFrame(animar);}
+for(let i=0;i<100;i++){
+    particulas.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*3+1,
+        dx:Math.random()*2-1,
+        dy:Math.random()*2-1
+    });
+}
+function animar(){
+    ctx.fillStyle="rgba(0,0,0,0.2)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    particulas.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle="white";
+        ctx.fill();
+        p.x+=p.dx; p.y+=p.dy;
+        if(p.x<0||p.x>canvas.width)p.dx*=-1;
+        if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    });
+    requestAnimationFrame(animar);
+}
 animar();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+
+// ---------- Carga dinámica de juegos ----------
+const juegosContainer = document.getElementById("juegos-container");
+
+// Lista de juegos adicionales (puedes agregar más)
+const juegosExtra = [
+    {href:"football.html", img:"football.png", alt:"Football"},
+    {href:"spider.html", img:"spider.png", alt:"Spider"},
+    {href:"majhong.html", img:"majhong.png", alt:"Majhong"},
+    {href:"slenderman.html", img:"slenderman.png", alt:"Slenderman"},
+    {href:"offroader.html", img:"offroader.png", alt:"Offroader"},
+    {href:"getaway-shootout.html", img:"getaway-shootout.png", alt:"Getaway Shootout"},
+    {href:"Basketball.html", img:"basketball.png", alt:"Basketball"},
+    {href:"Red-Ball-4.html", img:"Red-Ball-4.png", alt:"Red Ball 4"},
+    {href:"slope-ball.html", img:"slope-ball.png", alt:"Slope Ball"}
+];
+
+let indexExtra = 0;
+let cargando = false;
+
+function cargarMasJuegos(){
+    if(cargando || indexExtra>=juegosExtra.length) return;
+    cargando = true;
+    const cargaPorVez = 3; // cuántos juegos se cargan cada vez
+    for(let i=0;i<cargaPorVez && indexExtra<juegosExtra.length;i++, indexExtra++){
+        const juego = juegosExtra[indexExtra];
+        const a = document.createElement("a");
+        a.href = juego.href;
+        const img = document.createElement("img");
+        img.src = juego.img;
+        img.alt = juego.alt;
+        img.className = "miniatura";
+        a.appendChild(img);
+        juegosContainer.appendChild(a);
+    }
+    cargando = false;
+}
+
+// Detectar cuando el usuario llega al fondo
+window.addEventListener("scroll", ()=>{
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 200){
+        cargarMasJuegos();
+    }
+});
 </script>
 
 </body>
