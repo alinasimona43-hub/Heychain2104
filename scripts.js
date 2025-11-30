@@ -1,3 +1,4 @@
+
 // ========== SISTEMA DE USUARIOS ==========
 if (!localStorage.getItem("usuarios")) {
     localStorage.setItem("usuarios", JSON.stringify({}));
@@ -95,55 +96,3 @@ function enviarMensaje(para, texto) {
     localStorage.setItem("usuarios", JSON.stringify(db));
     return true;
 }
-
-// ========== MOSTRAR PERFIL ARRIBA A LA DERECHA ==========
-function mostrarPerfil() {
-    const usuario = getUser();
-    if (!usuario) return;
-
-    // Crear contenedor si no existe
-    let cont = document.getElementById("perfil");
-    if (!cont) {
-        cont = document.createElement("div");
-        cont.id = "perfil";
-        cont.style.position = "fixed";
-        cont.style.top = "10px";
-        cont.style.right = "10px";
-        cont.style.display = "flex";
-        cont.style.alignItems = "center";
-        cont.style.gap = "10px";
-        cont.style.background = "rgba(0,0,0,0.5)";
-        cont.style.padding = "5px 10px";
-        cont.style.borderRadius = "10px";
-        cont.style.zIndex = "20";
-        cont.style.color = "white";
-        cont.style.fontWeight = "bold";
-        document.body.appendChild(cont);
-    }
-
-    // Foto
-    let foto = document.getElementById("perfil-foto");
-    if (!foto) {
-        foto = document.createElement("img");
-        foto.id = "perfil-foto";
-        foto.style.width = "40px";
-        foto.style.height = "40px";
-        foto.style.borderRadius = "50%";
-        foto.style.objectFit = "cover";
-        cont.appendChild(foto);
-    }
-
-    // Nombre
-    let nombre = document.getElementById("perfil-nombre");
-    if (!nombre) {
-        nombre = document.createElement("span");
-        nombre.id = "perfil-nombre";
-        cont.appendChild(nombre);
-    }
-
-    foto.src = usuario.avatar || "default.png";
-    nombre.textContent = usuario.nombre || localStorage.getItem("sesion");
-}
-
-// Ejecutar al cargar la página
-window.addEventListener("load", mostrarPerfil);
