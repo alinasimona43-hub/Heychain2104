@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contenedor {
+    width: 300px;
+    text-align: center;
+}
+
+.caja {
+    display: none;
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(4px);
+    transition: 0.3s;
+}
+
+.caja.activa {
+    display: block;
+    animation: fade 0.4s;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    width: 95%;
+    padding: 10px;
+    background: rgb(0,150,255);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.link {
+    margin-top: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@keyframes fade {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+}
+
+/* ANIMACIÓN SHAKE */
+.shake {
+    animation: shakeAnim 0.4s;
+}
+
+@keyframes shakeAnim {
+    10%, 90% { transform: translateX(-5px); }
+    20%, 80% { transform: translateX(8px); }
+    30%, 50%, 70% { transform: translateX(-12px); }
+    40%, 60% { transform: translateX(12px); }
+}
