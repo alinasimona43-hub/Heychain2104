@@ -51,6 +51,9 @@ canvas#fondo { position:fixed; top:0; left:0; z-index:-1; }
     border-radius: 50%;
     object-fit: cover;
 }
+#perfil span {
+    color: white;
+}
 
 /* Responsive */
 @media(max-width:1200px){.juegos{grid-template-columns:repeat(4,1fr);} }
@@ -74,7 +77,7 @@ if (!localStorage.getItem("sesion")) {
 
 <!-- Contenedor del perfil -->
 <div id="perfil">
-    <img id="perfil-foto" src="default.png" alt="Foto de perfil">
+    <img id="perfil-foto" src="img/default.png" alt="Foto de perfil">
     <span id="perfil-nombre"></span>
 </div>
 
@@ -160,13 +163,26 @@ if (user) {
 }
 
 // ⭐ MOSTRAR PERFIL ARRIBA A LA DERECHA
-window.addEventListener("load",()=>{
-    let usuario = JSON.parse(localStorage.getItem("usuarios"))[localStorage.getItem("sesion")];
-    if(!usuario) return;
+window.addEventListener("load", () => {
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || {};
+    const sesion = localStorage.getItem("sesion");
+
+    if (!sesion || !usuarios[sesion]) {
+        console.warn("Usuario no encontrado en localStorage:", sesion);
+        return;
+    }
+
+    const usuario = usuarios[sesion];
+
     const foto = document.getElementById("perfil-foto");
     const nombre = document.getElementById("perfil-nombre");
-    foto.src = usuario.avatar || "default.png";
-    nombre.textContent = usuario.nombre || localStorage.getItem("sesion");
+
+    // Foto: si avatar existe, úsala; si no, usa default.png
+    foto.src = usuario.avatar ? usuario.avatar : "img/default.png";
+
+    // Nombre en blanco
+    nombre.textContent = usuario.nombre || sesion;
+    nombre.style.color = "white";
 });
 </script>
 
