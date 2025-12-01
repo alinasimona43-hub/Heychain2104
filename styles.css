@@ -79,7 +79,7 @@ body {
     grid-template-columns: repeat(6, 1fr);
     gap: 20px;
     justify-items: center;
-    margin-top: 40px;
+    margin-top: 40px; /* Ajusta si quieres más cerca del título */
     padding: 0 10px;
     z-index: 10;
     position: relative;
@@ -145,4 +145,28 @@ canvas#fondo {
     50% { transform: translateX(6px); }
     75% { transform: translateX(-6px); }
     100% { transform: translateX(0px); }
+}
+
+/* ============================
+      🆕 FOTO DE PERFIL
+   ============================ */
+
+#perfil {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+    z-index: 60; /* Más arriba que juegos y canvas */
+}
+
+/* ============================
+   🆕 AJUSTE OPCIONAL JUEGOS
+   ============================ */
+
+.juegos {
+    margin-top: 20px; /* Para que no quede tan abajo respecto al título */
 }
