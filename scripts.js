@@ -22,7 +22,8 @@ function registrarUsuario() {
         nombre: usuario,
         pass: pass,
         foto: foto,
-        puntos: 0
+        puntos: 0,
+        juegos: {}
     };
 
     localStorage.setItem("user_" + usuario, JSON.stringify(datos));
@@ -53,7 +54,7 @@ function logoutUsuario() {
     window.location.href = "login.html";
 }
 
-// Cargar usuario en el panel superior del index
+// Cargar usuario en el panel superior
 function cargarUsuarioActual() {
     const usuarioId = localStorage.getItem("sesion");
     if (!usuarioId) return;
@@ -67,33 +68,6 @@ function cargarUsuarioActual() {
 }
 
 /* ============================
-   🆕 ACTUALIZACIÓN AUTOMÁTICA AVATAR
-   ============================ */
-
-document.addEventListener("DOMContentLoaded", () => {
-    const usuarioId = localStorage.getItem("sesion");
-    if (!usuarioId) return;
-    let data = JSON.parse(localStorage.getItem("user_" + usuarioId));
-
-    const avatarInput = document.getElementById("foto");
-    const avatarImg = document.getElementById("user-foto");
-
-    if (avatarInput && avatarImg) {
-        avatarInput.addEventListener("change", e => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = () => {
-                data.foto = reader.result;
-                avatarImg.src = reader.result; // Actualiza panel superior
-                localStorage.setItem("user_" + usuarioId, JSON.stringify(data));
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-});
-
-/* ============================
        SUMAR PUNTOS AUTOMÁTICOS
    ============================ */
 
@@ -105,9 +79,8 @@ setInterval(() => {
     data.puntos += 1;
     localStorage.setItem("user_" + usuarioId, JSON.stringify(data));
 
-    if (document.getElementById("user-puntos")) {
-        document.getElementById("user-puntos").textContent = "⭐ " + data.puntos;
-    }
+    const userPuntos = document.getElementById("user-puntos");
+    if(userPuntos) userPuntos.textContent = "⭐ " + data.puntos;
 }, 30000);
 
 /* ============================
@@ -190,4 +163,55 @@ if (titulo) {
         titulo.style.color = `hsl(${hue}, 100%, 50%)`;
         hue = (hue + 1) % 360;
     }, 50);
+}
+
+/* ============================
+       MODAL PERFIL + SONIDO
+   ============================ */
+
+const sonidoClick = new Audio("click.mp3"); // sonido al hacer click en avatar
+
+const userFoto = document.getElementById("user-foto");
+if(userFoto){
+    userFoto.addEventListener("click", ()=>{
+        sonidoClick.play();
+
+        const modal = document.getElementById("perfil-modal");
+        modal.style.display = "flex";
+
+        const userId = localStorage.getItem("sesion");
+        if(!userId) return;
+        const data = JSON.parse(localStorage.getItem("user_" + userId));
+
+        // Datos del modal
+        document.getElementById("perfil-foto-grande").src = data.foto || "default.png";
+        document.getElementById("perfil-nombre").textContent = data.nombre;
+        document.getElementById("perfil-estrellas").textContent = "⭐ " + data.puntos;
+
+        // Juegos más jugados
+        const juegosPanel = document.getElementById("juegos-mas-jugados");
+        juegosPanel.innerHTML = "";
+        if(data.juegos){
+            Object.entries(data.juegos).forEach(([juego, minutos])=>{
+                const div = document.createElement("div");
+                div.classList.add("juego-item");
+                div.innerHTML = `
+                    <img src="thumb-${juego}.png" alt="${juego}">
+                    <div>
+                        <div>${juego}</div>
+                        <div>He jugado ${minutos} minutos</div>
+                    </div>
+                `;
+                juegosPanel.appendChild(div);
+            });
+        }
+    });
+}
+
+// Cerrar modal
+const cerrarPerfil = document.getElementById("cerrar-perfil");
+if(cerrarPerfil){
+    cerrarPerfil.addEventListener("click", ()=>{
+        document.getElementById("perfil-modal").style.display="none";
+    });
 }
